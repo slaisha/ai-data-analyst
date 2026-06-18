@@ -1,0 +1,17 @@
+region,product_category,units_sold,revenue,discount_pct,customer_rating
+West,Hair Care,1200,38500,8,4.8
+East,Color,930,31200,10,4.6
+South,Treatment,760,24800,12,4.4
+North,Product,540,18600,14,4.2
+West,Color,1110,36400,9,4.7
+East,Hair Care,980,32600,10,4.6
+South,Product,690,22600,12,4.4
+North,Treatment,480,17400,15,4.1
+West,Treatment,1350,40200,7,4.9
+East,Product,870,27900,11,4.5
+South,Hair Care,820,26600,11,4.5
+North,Color,620,21000,13,4.3
+West,Product,1530,41800,6,4.9
+East,Treatment,790,25200,12,4.4
+South,Color,740,24000,12,4.4
+North,Hair Care,360,16200,16,4.1
