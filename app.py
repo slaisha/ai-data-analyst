@@ -132,6 +132,43 @@ c4.metric("Categorical", len(profile["categorical_cols"]))
 st.markdown("#### Data preview")
 st.dataframe(df.head(50), use_container_width=True)
 
+# ── Charts ────────────────────────────────────────────────────────────────────
+numeric_cols = profile["numeric_cols"]
+categorical_cols = profile["categorical_cols"]
+
+if numeric_cols:
+    st.markdown("#### Charts")
+    chart_cols = st.columns(2)
+
+    # Top categories by a numeric measure (bar chart)
+    with chart_cols[0]:
+        if categorical_cols:
+            cat_col = st.selectbox("Group by", categorical_cols, key="cat_col")
+            measure = st.selectbox("Measure", numeric_cols, key="bar_measure")
+            grouped = (
+                df.groupby(cat_col, dropna=False)[measure]
+                .sum()
+                .sort_values(ascending=False)
+                .head(10)
+            )
+            st.caption(f"Total {measure} by {cat_col} (top 10)")
+            st.bar_chart(grouped)
+        else:
+            st.caption("No categorical columns to group by.")
+
+    # Relationship between two numeric columns (scatter)
+    with chart_cols[1]:
+        if len(numeric_cols) >= 2:
+            default_y = numeric_cols[1]
+            x_col = st.selectbox("X axis", numeric_cols, index=0, key="scatter_x")
+            y_col = st.selectbox(
+                "Y axis", numeric_cols, index=numeric_cols.index(default_y), key="scatter_y"
+            )
+            st.caption(f"{x_col} vs {y_col}")
+            st.scatter_chart(df[[x_col, y_col]], x=x_col, y=y_col)
+        else:
+            st.caption("Need at least two numeric columns for a scatter plot.")
+
 # ── Executive summary ─────────────────────────────────────────────────────────
 st.markdown("#### Executive summary")
 
