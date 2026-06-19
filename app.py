@@ -163,6 +163,43 @@ st.markdown(
         border-radius: 14px; overflow: hidden;
         box-shadow: 0 10px 26px -22px rgba(42,26,28,0.55);
       }
+
+      /* Selectbox + text input contrast */
+      div[data-baseweb="select"] > div {
+        background: #FFFFFF;
+        border: 1.5px solid rgba(90,48,80,0.30);
+        border-radius: 10px;
+        box-shadow: 0 4px 14px -10px rgba(42,26,28,0.5);
+        transition: border-color 0.15s ease, box-shadow 0.15s ease;
+      }
+      div[data-baseweb="select"] > div:hover {
+        border-color: var(--plum);
+      }
+      div[data-baseweb="select"] svg { color: var(--plum); }
+
+      .stTextInput input {
+        background: #FFFFFF;
+        border: 1.5px solid rgba(90,48,80,0.30);
+        border-radius: 10px;
+      }
+      .stTextInput input:focus {
+        border-color: var(--plum);
+        box-shadow: 0 0 0 3px rgba(90,48,80,0.12);
+      }
+
+      /* Dropdown menu popover */
+      div[data-baseweb="popover"] ul {
+        background: #FFFFFF;
+        border: 1px solid rgba(90,48,80,0.18);
+        border-radius: 10px;
+        box-shadow: 0 14px 34px -16px rgba(42,26,28,0.5);
+      }
+      div[data-baseweb="popover"] li:hover {
+        background: #F3E7F0;
+      }
+      div[data-baseweb="popover"] li[aria-selected="true"] {
+        background: var(--plum); color: #fff;
+      }
     </style>
     """,
     unsafe_allow_html=True,
