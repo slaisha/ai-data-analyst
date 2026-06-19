@@ -27,26 +27,141 @@ st.markdown(
     <style>
       @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=DM+Mono:wght@400;500&display=swap');
 
+      :root {
+        --plum: #5A3050;
+        --plum-soft: #D8B4CC;
+        --teal: #0F766E;
+        --ink: #2A1A1C;
+      }
+
       html, body, [class*="css"], .stMarkdown, .stButton button {
         font-family: 'Plus Jakarta Sans', sans-serif;
       }
       h1, h2, h3 { letter-spacing: -0.5px; font-weight: 800; }
       code, .mono { font-family: 'DM Mono', monospace; }
 
+      /* App background: soft animated gradient wash */
+      .stApp {
+        background:
+          radial-gradient(1200px 600px at 10% -10%, #F3E7F0 0%, rgba(243,231,240,0) 55%),
+          radial-gradient(1000px 500px at 110% 10%, #E3F1EE 0%, rgba(227,241,238,0) 50%),
+          #FAF7F4;
+      }
+
+      @keyframes rise {
+        from { opacity: 0; transform: translateY(12px); }
+        to   { opacity: 1; transform: translateY(0); }
+      }
+
+      /* Hero banner */
+      .hero {
+        position: relative;
+        border-radius: 22px;
+        padding: 40px 44px;
+        margin: 6px 0 26px 0;
+        color: #fff;
+        background: linear-gradient(120deg, #5A3050 0%, #3C2A4D 45%, #0F766E 110%);
+        box-shadow: 0 18px 40px -18px rgba(90,48,80,0.55);
+        overflow: hidden;
+        animation: rise 0.6s ease both;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        top: -60px; right: -40px;
+        width: 280px; height: 280px;
+        background: radial-gradient(circle, rgba(216,180,204,0.45) 0%, rgba(216,180,204,0) 70%);
+        filter: blur(8px);
+      }
+      .hero-eyebrow {
+        font-family: 'DM Mono', monospace;
+        font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+        color: #E9D2E2; margin-bottom: 10px;
+      }
+      .hero h1 {
+        font-size: 42px; line-height: 1.05; margin: 0 0 12px 0; color: #fff;
+      }
+      .hero p { font-size: 15px; max-width: 560px; color: #F1E6EE; margin: 0; line-height: 1.6; }
+
       .app-eyebrow {
         font-family: 'DM Mono', monospace;
         font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
-        color: #0F766E;
+        color: var(--plum);
       }
+
       .status-pill {
-        font-family: 'DM Mono', monospace; font-size: 11px;
-        padding: 4px 12px; border-radius: 20px; display: inline-block;
+        font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 500;
+        padding: 5px 13px; border-radius: 20px; display: inline-block;
       }
       .status-on  { background: #DCF5EE; color: #0F766E; }
-      .status-off { background: #F3E8E8; color: #9A3B3B; }
+      .status-off { background: #F6E9E3; color: #9A5B3B; }
+
       .summary-card {
-        background: #F1EFEA; border-left: 3px solid #0F766E;
-        padding: 20px 24px; border-radius: 8px; line-height: 1.7;
+        background: rgba(255,255,255,0.7);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(90,48,80,0.12);
+        border-left: 4px solid var(--plum);
+        padding: 22px 26px; border-radius: 14px; line-height: 1.75;
+        box-shadow: 0 12px 30px -22px rgba(42,26,28,0.5);
+        animation: rise 0.5s ease both;
+      }
+
+      /* Glassmorphism metric cards */
+      div[data-testid="stMetric"] {
+        background: rgba(255,255,255,0.65);
+        backdrop-filter: blur(6px);
+        border: 1px solid rgba(90,48,80,0.10);
+        border-radius: 16px;
+        padding: 18px 20px;
+        box-shadow: 0 10px 26px -20px rgba(42,26,28,0.55);
+        transition: transform 0.18s ease, box-shadow 0.18s ease;
+        animation: rise 0.5s ease both;
+      }
+      div[data-testid="stMetric"]:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 18px 34px -20px rgba(90,48,80,0.55);
+      }
+      div[data-testid="stMetricValue"] {
+        font-weight: 800; color: var(--plum);
+      }
+      div[data-testid="stMetricLabel"] {
+        font-family: 'DM Mono', monospace;
+        text-transform: uppercase; letter-spacing: 1.5px; font-size: 11px;
+      }
+
+      /* Section headings with accent tick */
+      .stMarkdown h4 {
+        position: relative; padding-left: 14px; margin-top: 8px;
+      }
+      .stMarkdown h4::before {
+        content: ""; position: absolute; left: 0; top: 4px; bottom: 4px;
+        width: 4px; border-radius: 4px;
+        background: linear-gradient(180deg, var(--plum), var(--teal));
+      }
+
+      /* Buttons */
+      .stButton button, .stDownloadButton button {
+        border-radius: 10px; font-weight: 700; border: none;
+        background: linear-gradient(120deg, var(--plum), #3C2A4D);
+        color: #fff; transition: transform 0.15s ease, box-shadow 0.15s ease;
+      }
+      .stButton button:hover, .stDownloadButton button:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 22px -12px rgba(90,48,80,0.6);
+        color: #fff;
+      }
+
+      /* Upload dropzone */
+      section[data-testid="stFileUploaderDropzone"] {
+        border: 2px dashed rgba(90,48,80,0.35);
+        border-radius: 16px;
+        background: rgba(255,255,255,0.5);
+      }
+
+      /* Dataframe rounding */
+      div[data-testid="stDataFrame"] {
+        border-radius: 14px; overflow: hidden;
+        box-shadow: 0 10px 26px -22px rgba(42,26,28,0.55);
       }
     </style>
     """,
@@ -96,11 +211,16 @@ with st.sidebar:
 
 
 # ── Header ────────────────────────────────────────────────────────────────────
-st.markdown('<div class="app-eyebrow">Local-first analytics</div>', unsafe_allow_html=True)
-st.title("AI Data Analyst")
-st.write(
-    "Upload a dataset to get an executive summary and ask questions in plain "
-    "English. Runs entirely on your machine."
+st.markdown(
+    """
+    <div class="hero">
+      <div class="hero-eyebrow">Local-first analytics</div>
+      <h1>AI Data Analyst</h1>
+      <p>Upload a dataset to get an executive summary, interactive charts, and
+      plain-English answers — running entirely on your machine.</p>
+    </div>
+    """,
+    unsafe_allow_html=True,
 )
 
 uploaded = st.file_uploader("Upload a CSV or Excel file", type=["csv", "xlsx", "xls"])
